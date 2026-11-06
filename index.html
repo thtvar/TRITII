@@ -2,7 +2,7 @@
 <html lang="fr" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>TRI'TII WorkSpace - Collaborative Project Hub</title>
     
     <!-- Custom High Quality Icon SVG Blob for Browser Tab Icon -->
@@ -57,6 +57,13 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* Anti-défilement horizontal global sur mobile */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden !important;
+            box-sizing: border-box;
+        }
+
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -81,7 +88,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen font-sans flex flex-col transition-colors duration-200 selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen font-sans flex flex-col transition-colors duration-200 selection:bg-brand-500 selection:text-white overflow-x-hidden">
 
     <!-- Mobile App Splash Screen Animation -->
     <div id="splashScreen" class="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center space-y-4">
@@ -102,18 +109,18 @@
     </div>
 
     <!-- Navbar -->
-    <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/80 backdrop-blur sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+    <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/80 backdrop-blur sticky top-0 z-40 shadow-sm w-full">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2 sm:space-x-3">
                 <div class="flex items-center space-x-2">
-                    <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M50 10 L55 25 L70 15 L68 32 L85 30 L77 45 L90 55 L75 62 L82 83 L65 82 L62 97 L50 87 L38 97 L35 77 L18 83 L25 67 L10 60 L23 50 L15 30 L32 32 L30 15 L45 25 Z" fill="#1D4ED8" stroke="#059669" stroke-width="3"/>
                         <circle cx="50" cy="50" r="28" fill="#FFFFFF" stroke="#059669" stroke-width="4"/>
                         <path d="M35 55 C40 38, 50 35, 65 32 M35 62 C45 50, 52 48, 65 42 M35 68 C45 68, 55 60, 65 52" stroke="#059669" stroke-width="4" stroke-linecap="round"/>
                         <polygon points="62,28 72,34 60,38" fill="#1D4ED8"/>
                     </svg>
                     <div>
-                        <div class="flex items-center space-x-1 font-extrabold text-xl tracking-wider text-slate-900 dark:text-white">
+                        <div class="flex items-center space-x-1 font-extrabold text-lg sm:text-xl tracking-wider text-slate-900 dark:text-white">
                             <span>TRI'T</span>
                             <span class="relative inline-block text-brand-600 dark:text-brand-400">
                                 I
@@ -123,43 +130,43 @@
                             </span>
                             <span class="text-brand-600 dark:text-brand-400">I</span>
                         </div>
-                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">Conteneur de Tri Automatique</p>
+                        <p class="text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">Conteneur de Tri Automatique</p>
                     </div>
                 </div>
             </div>
 
             <!-- Global Action Bar -->
-            <div class="flex items-center space-x-2 sm:space-x-3">
+            <div class="flex items-center space-x-1.5 sm:space-x-3">
                 <button onclick="toggleTheme()" title="Basculer Thème Clair/Sombre" class="p-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
                 </button>
 
-                <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-1.5">
-                    <span class="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline">Mon profil :</span>
+                <div class="hidden sm:flex items-center space-x-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-2.5 py-1.5">
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Profil :</span>
                     <select id="activeUserSelect" onchange="changeActiveUser(this.value)" class="bg-transparent text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none cursor-pointer">
                     </select>
                 </div>
 
-                <button onclick="openModal('modal-email-config')" title="Configurer les destinataires emails" class="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/80 rounded-xl hover:bg-emerald-100 transition-colors">
-                    <i data-lucide="mail" class="w-3.5 h-3.5"></i>
-                    <span class="hidden md:inline">Emails &amp; Notifications</span>
+                <button onclick="openModal('modal-email-config')" title="Configurer les destinataires emails" class="p-2 sm:px-3 sm:py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/80 rounded-xl hover:bg-emerald-100 transition-colors flex items-center space-x-1">
+                    <i data-lucide="mail" class="w-4 h-4 sm:w-3.5 sm:h-3.5"></i>
+                    <span class="hidden md:inline">Emails</span>
                 </button>
 
-                <button onclick="openFullscreenReview()" title="Mode Présentation / Jury" class="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border border-brand-200 dark:border-brand-800/80 rounded-xl hover:bg-brand-100 transition-colors">
-                    <i data-lucide="presentation" class="w-3.5 h-3.5"></i>
-                    <span class="hidden lg:inline">Mode Revue de Projet</span>
+                <button onclick="openFullscreenReview()" title="Mode Présentation / Jury" class="p-2 sm:px-3 sm:py-1.5 text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border border-brand-200 dark:border-brand-800/80 rounded-xl hover:bg-brand-100 transition-colors flex items-center space-x-1">
+                    <i data-lucide="presentation" class="w-4 h-4 sm:w-3.5 sm:h-3.5"></i>
+                    <span class="hidden lg:inline">Revue</span>
                 </button>
 
-                <div class="flex items-center space-x-1 border-l border-slate-200 dark:border-slate-800 pl-2">
-                    <button onclick="exportData()" title="Exporter la sauvegarde JSON" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                <div class="flex items-center space-x-1 border-l border-slate-200 dark:border-slate-800 pl-1.5 sm:pl-2">
+                    <button onclick="exportData()" title="Exporter" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white rounded-lg transition-colors">
                         <i data-lucide="download" class="w-4 h-4"></i>
                     </button>
-                    <label title="Importer un fichier JSON" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer">
+                    <label title="Importer" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white rounded-lg transition-colors cursor-pointer">
                         <i data-lucide="upload" class="w-4 h-4"></i>
                         <input type="file" id="importFileInput" accept=".json" onchange="importData(event)" class="hidden">
                     </label>
-                    <button onclick="resetData()" title="Réinitialiser les données" class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors">
+                    <button onclick="resetData()" title="Reset" class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors">
                         <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -168,52 +175,52 @@
     </header>
 
     <!-- Cloud Sync Status Bar -->
-    <div id="cloudSyncBar" class="bg-brand-50 dark:bg-slate-900 border-b border-brand-100 dark:border-slate-800 py-1.5 px-4 text-center text-xs font-semibold text-brand-700 dark:text-brand-300 flex items-center justify-center space-x-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span id="cloudSyncStatusText">Synchronisation Cloud en temps réel (Firebase) activée</span>
+    <div id="cloudSyncBar" class="bg-brand-50 dark:bg-slate-900 border-b border-brand-100 dark:border-slate-800 py-1.5 px-3 text-center text-[11px] sm:text-xs font-semibold text-brand-700 dark:text-brand-300 flex items-center justify-center space-x-2 w-full overflow-hidden">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
+        <span id="cloudSyncStatusText" class="truncate">Synchronisation Cloud en temps réel (Firebase) activée</span>
     </div>
 
     <!-- Main Content Layout -->
-    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row gap-6">
+    <div class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col md:flex-row gap-4 sm:gap-6 overflow-x-hidden">
 
         <!-- Sidebar Navigation -->
         <aside class="w-full md:w-64 flex-shrink-0 space-y-4">
-            <nav class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-2 space-y-1 shadow-sm">
-                <button onclick="switchTab('feed')" id="nav-feed" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="activity" class="w-4 h-4"></i>
-                    <span>Journal "Ce qu'on a fait"</span>
+            <nav class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-2 space-y-1 shadow-sm overflow-x-auto custom-scrollbar flex md:flex-col space-x-1 md:space-x-0">
+                <button onclick="switchTab('feed')" id="nav-feed" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="activity" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Journal</span>
                 </button>
-                <button onclick="switchTab('planning')" id="nav-planning" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
-                    <span>Planning, Gantt &amp; Jalons</span>
+                <button onclick="switchTab('planning')" id="nav-planning" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="calendar-days" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Planning &amp; Gantt</span>
                 </button>
-                <button onclick="switchTab('raci')" id="nav-raci" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
-                    <span>Matrice RACI</span>
+                <button onclick="switchTab('raci')" id="nav-raci" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="grid-3x3" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Matrice RACI</span>
                 </button>
-                <button onclick="switchTab('workload')" id="nav-workload" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="clock" class="w-4 h-4"></i>
-                    <span>Charge &amp; Time Tracker</span>
+                <button onclick="switchTab('workload')" id="nav-workload" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="clock" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Charge &amp; Timer</span>
                 </button>
-                <button onclick="switchTab('kanban')" id="nav-kanban" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="kanban" class="w-4 h-4"></i>
-                    <span>Suivi Kanban</span>
+                <button onclick="switchTab('kanban')" id="nav-kanban" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="kanban" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Kanban</span>
                 </button>
-                <button onclick="switchTab('deliverables')" id="nav-deliverables" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="folder-open" class="w-4 h-4"></i>
-                    <span>Livrables &amp; Fichiers</span>
+                <button onclick="switchTab('deliverables')" id="nav-deliverables" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="folder-open" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Livrables</span>
                 </button>
-                <button onclick="switchTab('meetings')" id="nav-meetings" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="users-2" class="w-4 h-4"></i>
-                    <span>Réunions &amp; PV</span>
+                <button onclick="switchTab('meetings')" id="nav-meetings" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="users-2" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Réunions &amp; PV</span>
                 </button>
-                <button onclick="switchTab('risks')" id="nav-risks" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
-                    <span>Gestion des Risques</span>
+                <button onclick="switchTab('risks')" id="nav-risks" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="shield-alert" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Risques</span>
                 </button>
-                <button onclick="switchTab('team')" id="nav-team" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
-                    <i data-lucide="user-check" class="w-4 h-4"></i>
-                    <span>Équipe &amp; Rôles</span>
+                <button onclick="switchTab('team')" id="nav-team" class="nav-btn flex-shrink-0 md:w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900">
+                    <i data-lucide="user-check" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap md:whitespace-normal">Équipe</span>
                 </button>
             </nav>
 
@@ -243,13 +250,13 @@
         </aside>
 
         <!-- Dynamic Main Section -->
-        <main class="flex-1 min-w-0">
+        <main class="flex-1 min-w-0 max-w-full overflow-x-hidden">
 
             <!-- TAB 1: Activity Feed -->
             <section id="tab-feed" class="tab-content space-y-6">
-                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm">
+                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm">
                     <div class="flex items-center space-x-3 mb-3">
-                        <div id="currentUserAvatar" class="w-9 h-9 rounded-full bg-brand-600 flex items-center justify-center font-bold text-xs text-white uppercase shadow-md">
+                        <div id="currentUserAvatar" class="w-9 h-9 rounded-full bg-brand-600 flex items-center justify-center font-bold text-xs text-white uppercase shadow-md flex-shrink-0">
                             --
                         </div>
                         <div>
@@ -259,13 +266,13 @@
                     </div>
                     <form onsubmit="postLog(event)" class="space-y-3">
                         <textarea id="logInput" required rows="2" placeholder="Ex: Intégration du jalon Vidéo promotionnelle & schémas DXF validés..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all resize-none"></textarea>
-                        <div class="flex items-center justify-between">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
                             <select id="logCategory" class="bg-slate-50 dark:bg-slate-900 text-xs border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-lg px-3 py-2 focus:outline-none">
                                 <option value="Réalisation">✅ Réalisation / Avancement</option>
                                 <option value="Point de blocage">⚠️ Point de blocage</option>
                                 <option value="Idée / Proposition">💡 Idée / Proposition</option>
                             </select>
-                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all flex items-center space-x-2 shadow-md shadow-brand-600/20">
+                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-all flex items-center justify-center space-x-2 shadow-md shadow-brand-600/20">
                                 <span>Publier mon statut</span>
                                 <i data-lucide="send" class="w-3.5 h-3.5"></i>
                             </button>
@@ -285,13 +292,13 @@
 
             <!-- TAB 2: Complete Project Planning (27 Milestones + Interactive Add/Subtasks & PDF Export) -->
             <section id="tab-planning" class="tab-content hidden space-y-6">
-                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4 max-w-full">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
                         <div>
                             <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                                <span>Planning Général Prévisionnel &amp; Gantt (Tâches, Sous-tâches &amp; Jalons)</span>
+                                <span>Planning Général Prévisionnel &amp; Gantt</span>
                             </h2>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Gérez dynamiquement la chronologie, les durées, les phases et réorganisez les éléments</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Gérez chronologie, durées et phases</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
                             <select id="planningPhaseFilter" onchange="renderPlanning()" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 rounded-xl px-3 py-1.5 focus:outline-none">
@@ -299,21 +306,21 @@
                             </select>
                             <button onclick="openModal('modal-phase')" class="bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 shadow-sm">
                                 <i data-lucide="folder-plus" class="w-4 h-4"></i>
-                                <span>+ Nouvelle Phase</span>
+                                <span>+ Phase</span>
                             </button>
                             <button onclick="openModal('modal-planning-item')" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 shadow-sm">
                                 <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                                <span>+ Ajouter Élément</span>
+                                <span>+ Élément</span>
                             </button>
                             <button onclick="downloadPlanningPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 shadow-sm">
                                 <i data-lucide="file-down" class="w-4 h-4"></i>
-                                <span>Télécharger Planning PDF</span>
+                                <span>PDF</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Gantt Visual & Interactive Table Container -->
-                    <div id="printableGanttArea" class="overflow-x-auto custom-scrollbar border border-slate-200 dark:border-slate-800 rounded-xl">
+                    <!-- Gantt Visual & Interactive Table Container with independent internal horizontal scroll so page doesn't shift -->
+                    <div id="printableGanttArea" class="w-full overflow-x-auto custom-scrollbar border border-slate-200 dark:border-slate-800 rounded-xl">
                         <table class="w-full text-left border-collapse min-w-[1350px] text-xs">
                             <thead>
                                 <tr class="bg-slate-900 text-white font-bold text-[11px]">
@@ -378,7 +385,7 @@
 
             <!-- TAB RACI: Matrice RACI -->
             <section id="tab-raci" class="tab-content hidden space-y-6">
-                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4 max-w-full">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                             <h2 class="text-base font-bold text-slate-900 dark:text-white">Matrice de Responsabilités RACI</h2>
@@ -387,11 +394,11 @@
                         <div class="flex items-center space-x-2">
                             <button onclick="openModal('modal-member')" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1 shadow-sm">
                                 <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
-                                <span>➕ Ajouter un membre manuellement</span>
+                                <span>➕ Ajouter un membre</span>
                             </button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto custom-scrollbar">
+                    <div class="w-full overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left border-collapse min-w-[700px]">
                             <thead>
                                 <tr id="raciTableHeader" class="border-b border-slate-200 dark:border-slate-800 text-[11px] font-bold text-slate-500 uppercase bg-slate-50 dark:bg-slate-900">
@@ -408,12 +415,12 @@
             <!-- TAB WORKLOAD: Charge & Time Tracker -->
             <section id="tab-workload" class="tab-content hidden space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                    <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white">Calculateur de Charge de Travail</h3>
                         <div id="memberWorkloadList" class="space-y-4"></div>
                     </div>
 
-                    <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                    <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white">Chronomètre &amp; Pointage Temps</h3>
                         <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center space-y-3">
                             <div id="timerDisplay" class="font-mono text-3xl font-extrabold text-brand-600 dark:text-brand-400">00:00:00</div>
@@ -434,7 +441,7 @@
                                     <input type="number" step="0.5" min="0.5" id="manualHoursInput" required placeholder="Ex: 2.5" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                                 </div>
                                 <div class="flex items-end">
-                                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-xl text-xs font-semibold">Enregistrer le Temps</button>
+                                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-xl text-xs font-semibold">Enregistrer</button>
                                 </div>
                             </div>
                         </form>
@@ -456,7 +463,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col h-[580px] shadow-sm">
+                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col h-[520px] shadow-sm">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
                             <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center space-x-2">
                                 <span class="w-2 h-2 rounded-full bg-slate-400"></span>
@@ -467,7 +474,7 @@
                         <div id="col-todo" class="flex-1 custom-scrollbar overflow-y-auto space-y-3 pr-1"></div>
                     </div>
 
-                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col h-[580px] shadow-sm">
+                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col h-[520px] shadow-sm">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
                             <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider flex items-center space-x-2">
                                 <span class="w-2 h-2 rounded-full bg-brand-500"></span>
@@ -478,7 +485,7 @@
                         <div id="col-in_progress" class="flex-1 custom-scrollbar overflow-y-auto space-y-3 pr-1"></div>
                     </div>
 
-                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col h-[580px] shadow-sm">
+                    <div class="bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col h-[520px] shadow-sm">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
                             <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center space-x-2">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -552,6 +559,8 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </section>
+        </main>
+    </div>
 
     <!-- MODAL: Add Phase -->
     <div id="modal-phase" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
@@ -686,7 +695,7 @@
                     <select id="fileMilestoneSelect" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></select>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Sélectionner un Fichier depuis votre Ordinateur (PDF, DXF, DWG, ZIP, etc.)</label>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Sélectionner un Fichier (PDF, DXF, DWG, ZIP...)</label>
                     <input type="file" id="fileLocalInput" onchange="handleFileSelection(event)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 cursor-pointer">
                     <input type="hidden" id="fileBase64Data">
                     <input type="hidden" id="fileSelectedName">
@@ -710,7 +719,7 @@
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
                 <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                     <i data-lucide="send" class="w-4 h-4 text-brand-600"></i>
-                    <span>Envoi Direct d'Email (Serveur / API)</span>
+                    <span>Envoi Direct d'Email (Client Mail)</span>
                 </h3>
                 <button onclick="closeModal('modal-email-send')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
@@ -737,7 +746,7 @@
                     </button>
                     <button type="button" onclick="sendEmailViaServer()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-600/20 flex items-center space-x-1.5">
                         <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                        <span>Envoyer Directement</span>
+                        <span>Envoyer</span>
                     </button>
                 </div>
             </div>
@@ -754,7 +763,7 @@
             <form onsubmit="saveRisk(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Intitulé du Risque</label>
-                    <input type="text" id="riskTitleInput" required placeholder="Ex: Retard livraison vérins pneumatiques..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
+                    <input type="text" id="riskTitleInput" required placeholder="Ex: Retard livraison vérins..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -762,21 +771,21 @@
                         <select id="riskImpactSelect" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                             <option value="Faible">Faible</option>
                             <option value="Moyen" selected>Moyen</option>
-                            <option value="Critique">Critique / Élevé</option>
+                            <option value="Critique">Critique</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Pilote du Risque</label>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Pilote</label>
                         <select id="riskOwnerSelect" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></select>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Plan d'atténuation / Secours</label>
-                    <textarea id="riskMitigationInput" rows="2" placeholder="Ex: Sourcing fournisseur alternatif local..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Plan d'atténuation</label>
+                    <textarea id="riskMitigationInput" rows="2" placeholder="Ex: Sourcing alternatif..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal('modal-risk')" class="px-3 py-2 rounded-xl text-xs text-slate-500">Annuler</button>
-                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white">Créer Risque</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white">Créer</button>
                 </div>
             </form>
         </div>
@@ -792,11 +801,11 @@
             <form onsubmit="saveTask(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Titre de la Tâche</label>
-                    <input type="text" id="taskTitle" required placeholder="Ex: Raccordement des capteurs optiques..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
+                    <input type="text" id="taskTitle" required placeholder="Ex: Raccordement capteurs..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Description</label>
-                    <textarea id="taskDesc" rows="2" placeholder="Détails techniques ou instructions..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
+                    <textarea id="taskDesc" rows="2" placeholder="Détails..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -814,7 +823,7 @@
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal('modal-task')" class="px-3 py-2 rounded-xl text-xs text-slate-500">Annuler</button>
-                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white">Créer Tâche</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white">Créer</button>
                 </div>
             </form>
         </div>
@@ -830,7 +839,7 @@
             <form onsubmit="saveMeeting(event)" class="space-y-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Titre / Objet</label>
-                    <input type="text" id="meetingTitle" required placeholder="Ex: Point d'avancement PDR &amp; Devis..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
+                    <input type="text" id="meetingTitle" required placeholder="Ex: Point PDR &amp; Devis..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -839,16 +848,16 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Lieu / Salle</label>
-                        <input type="text" id="meetingLocation" placeholder="Ex: Salle B12 / Visioconférence" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
+                        <input type="text" id="meetingLocation" placeholder="Ex: Salle B12" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Ordre du jour</label>
-                    <textarea id="meetingAgenda" rows="2" placeholder="1. Validation des livrables&#10;2. Revue des risques" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
+                    <textarea id="meetingAgenda" rows="2" placeholder="1. Validation..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Résumé / Compte-rendu (PV)</label>
-                    <textarea id="meetingSummary" rows="3" placeholder="Notes de synthèse, décisions prises et actions à mener..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Compte-rendu (PV)</label>
+                    <textarea id="meetingSummary" rows="3" placeholder="Notes de synthèse..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100"></textarea>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal('modal-meeting')" class="px-3 py-2 rounded-xl text-xs text-slate-500">Annuler</button>
@@ -872,7 +881,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Rôle / Spécialité</label>
-                    <input type="text" id="memberRoleInput" required placeholder="Ex: Chef de Projet, Ingénieur Vision, Électronicien..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
+                    <input type="text" id="memberRoleInput" required placeholder="Ex: Chef de Projet" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Adresse Email</label>
@@ -880,49 +889,40 @@
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal('modal-member')" class="px-3 py-2 rounded-xl text-xs text-slate-500">Annuler</button>
-                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white">Ajouter Membre</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-600 text-white">Ajouter</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MODAL: Confirmation de Réinitialisation -->
+    <!-- MODAL: Confirm Reset -->
     <div id="modal-confirm-reset" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <div class="flex items-center space-x-3 text-red-600 dark:text-red-400">
-                <div class="p-2.5 bg-red-100 dark:bg-red-950/60 rounded-xl">
-                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900 dark:text-white">Réinitialiser le projet ?</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Action irréversible</p>
-                </div>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="text-sm font-bold text-red-600 dark:text-red-400 flex items-center space-x-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                    <span>Réinitialiser les Données</span>
+                </h3>
+                <button onclick="closeModal('modal-confirm-reset')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Êtes-vous sûr de vouloir tout supprimer ? Cette action effacera définitivement tous les membres, tâches Kanban, comptes-rendus, risques, livrables et remettra l'avancement à 0%.
-            </p>
-            <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                <button type="button" onclick="closeModal('modal-confirm-reset')" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                    Annuler
-                </button>
-                <button type="button" onclick="confirmResetData()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-600/20 transition-all flex items-center space-x-1">
-                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                    <span>Oui, tout supprimer</span>
-                </button>
+            <p class="text-xs text-slate-600 dark:text-slate-300">Êtes-vous sûr de vouloir réinitialiser l'application ? Toutes vos modifications et tâches ajoutées seront remises à zéro.</p>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button type="button" onclick="closeModal('modal-confirm-reset')" class="px-3 py-2 rounded-xl text-xs text-slate-500">Annuler</button>
+                <button type="button" onclick="confirmResetData()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-600/20">Confirmer la réinitialisation</button>
             </div>
         </div>
     </div>
 
     <!-- MODAL: Revue de Projet Exécutive -->
     <div id="modal-executive-review" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-4xl w-full p-8 shadow-2xl space-y-6 text-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl space-y-6 text-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div class="flex items-center space-x-3">
                     <div class="p-3 bg-brand-600/20 border border-brand-500/30 rounded-2xl text-brand-400">
                         <i data-lucide="presentation" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <h2 class="text-lg font-bold">Revue de Projet / Mode Présentation Exécutif</h2>
+                        <h2 class="text-base sm:text-lg font-bold">Revue de Projet / Mode Présentation</h2>
                         <p class="text-xs text-slate-400">Synthèse globale pour le jury &amp; les tuteurs ITII Normandie</p>
                     </div>
                 </div>
@@ -955,7 +955,7 @@
             <div class="flex justify-end pt-4 border-t border-slate-800">
                 <button onclick="window.print()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold flex items-center space-x-2">
                     <i data-lucide="printer" class="w-4 h-4"></i>
-                    <span>Imprimer / Exporter PDF la Revue</span>
+                    <span>Imprimer / PDF</span>
                 </button>
             </div>
         </div>
@@ -1019,15 +1019,10 @@
                         }
                     }, (error) => {
                         clearTimeout(fallbackTimer);
-                        console.warn("Firestore sync restriction:", error);
                         const statusEl = document.getElementById('cloudSyncStatusText');
                         const statusDot = document.querySelector('#cloudSyncBar span:first-child');
-                        if (statusEl) {
-                            statusEl.innerText = "Mode local activé (Données sauvegardées en mémoire navigateur)";
-                        }
-                        if (statusDot) {
-                            statusDot.className = "inline-block w-2 h-2 rounded-full bg-amber-500";
-                        }
+                        if (statusEl) statusEl.innerText = "Mode local activé (Données sauvegardées en mémoire navigateur)";
+                        if (statusDot) statusDot.className = "inline-block w-2 h-2 rounded-full bg-amber-500";
                         removeSplash();
                     });
 
@@ -1038,33 +1033,25 @@
                             await setDoc(sharedDocRef, { state: newState, updatedAt: new Date().toISOString() });
                             if (statusEl) statusEl.innerText = "Synchronisé en temps réel avec tous les collaborateurs";
                         } catch(e) {
-                            console.warn("Cloud push error:", e);
                             const statusEl = document.getElementById('cloudSyncStatusText');
                             if (statusEl) statusEl.innerText = "Sauvegardé en local";
                         }
                     };
                 } catch (err) {
                     clearTimeout(fallbackTimer);
-                    console.warn("Failed to set up Firestore listener:", err);
                     removeSplash();
                 }
             };
 
             onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    setupListener();
-                }
+                if (user) setupListener();
             });
 
             try {
-                if (!auth.currentUser) {
-                    await signInAnonymously(auth);
-                } else {
-                    setupListener();
-                }
+                if (!auth.currentUser) await signInAnonymously(auth);
+                else setupListener();
             } catch(err) {
                 clearTimeout(fallbackTimer);
-                console.warn("Auth fallback mode:", err);
                 setupListener();
             }
         };
@@ -1145,9 +1132,7 @@
                     const parsed = JSON.parse(saved);
                     return Object.assign({}, INITIAL_STATE, parsed);
                 }
-            } catch (e) {
-                console.warn("Failed to load state from localStorage:", e);
-            }
+            } catch (e) {}
             return JSON.parse(JSON.stringify(INITIAL_STATE));
         }
 
@@ -1201,8 +1186,8 @@
                         <tr class="bg-slate-100 dark:bg-slate-900 font-bold text-slate-900 dark:text-slate-100 border-t border-b border-slate-300 dark:border-slate-700 h-8">
                             <td class="py-1.5 px-1 text-center border-r border-slate-200 dark:border-slate-800">
                                 <div class="flex items-center justify-center space-x-0.5">
-                                    <button onclick="movePlanningItem('${m.id}', -1)" class="p-0.5 text-slate-500 hover:text-brand-600" title="Monter"><i data-lucide="arrow-up" class="w-3 h-3"></i></button>
-                                    <button onclick="movePlanningItem('${m.id}', 1)" class="p-0.5 text-slate-500 hover:text-brand-600" title="Descendre"><i data-lucide="arrow-down" class="w-3 h-3"></i></button>
+                                    <button onclick="movePlanningItem('${m.id}', -1)" class="p-0.5 text-slate-500 hover:text-brand-600"><i data-lucide="arrow-up" class="w-3 h-3"></i></button>
+                                    <button onclick="movePlanningItem('${m.id}', 1)" class="p-0.5 text-slate-500 hover:text-brand-600"><i data-lucide="arrow-down" class="w-3 h-3"></i></button>
                                 </div>
                             </td>
                             <td class="py-1.5 px-3 border-r border-slate-200 dark:border-slate-800">
@@ -1214,9 +1199,7 @@
                             <td class="py-1.5 px-2 text-center border-r border-slate-200 dark:border-slate-800 text-[10px] text-slate-500">${duration}</td>
                             <td class="py-1.5 px-2 text-center border-r border-slate-200 dark:border-slate-800">-</td>
                             <td class="py-1.5 px-2 text-center border-r border-slate-200 dark:border-slate-800">
-                                <button onclick="deletePlanningItem('${m.id}')" class="text-red-400 hover:text-red-600 p-0.5" title="Supprimer cette phase">
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                </button>
+                                <button onclick="deletePlanningItem('${m.id}')" class="text-red-400 hover:text-red-600 p-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </td>
                             <td colspan="17" class="py-1.5 px-0 relative bg-slate-100/50 dark:bg-slate-900/50 h-8">
                                 <div class="absolute h-2.5 bg-slate-600 rounded top-2.5" style="left: ${pos.leftPct}%; width: ${pos.widthPct}%;"></div>
@@ -1234,8 +1217,8 @@
                     <tr class="${rowBg} transition-colors h-8">
                         <td class="py-1.5 px-1 text-center border-r border-slate-200 dark:border-slate-800">
                             <div class="flex items-center justify-center space-x-0.5">
-                                <button onclick="movePlanningItem('${m.id}', -1)" class="p-0.5 text-slate-400 hover:text-brand-600" title="Monter"><i data-lucide="arrow-up" class="w-3 h-3"></i></button>
-                                <button onclick="movePlanningItem('${m.id}', 1)" class="p-0.5 text-slate-400 hover:text-brand-600" title="Descendre"><i data-lucide="arrow-down" class="w-3 h-3"></i></button>
+                                <button onclick="movePlanningItem('${m.id}', -1)" class="p-0.5 text-slate-400 hover:text-brand-600"><i data-lucide="arrow-up" class="w-3 h-3"></i></button>
+                                <button onclick="movePlanningItem('${m.id}', 1)" class="p-0.5 text-slate-400 hover:text-brand-600"><i data-lucide="arrow-down" class="w-3 h-3"></i></button>
                             </div>
                         </td>
                         <td class="py-1.5 ${paddingLeftClass} border-r border-slate-200 dark:border-slate-800 font-medium ${m.done ? 'line-through text-slate-400' : ''}">
@@ -1264,15 +1247,13 @@
                             <input type="checkbox" ${m.done ? 'checked' : ''} onchange="toggleMilestone('${m.id}')" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500 w-3.5 h-3.5 cursor-pointer">
                         </td>
                         <td class="py-1.5 px-1 text-center border-r border-slate-200 dark:border-slate-800">
-                            <button onclick="deletePlanningItem('${m.id}')" class="text-red-400 hover:text-red-600 p-0.5" title="Supprimer cet élément">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                            </button>
+                            <button onclick="deletePlanningItem('${m.id}')" class="text-red-400 hover:text-red-600 p-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                         </td>
                         <td colspan="17" class="py-1.5 px-0 relative h-8">
                             ${isMilestone ? `
-                                <div class="absolute w-3.5 h-3.5 bg-amber-500 border border-amber-600 transform rotate-45 top-2 shadow-sm" style="left: ${pos.leftPct}%; margin-left:-7px;" title="${m.title} (${m.end})"></div>
+                                <div class="absolute w-3.5 h-3.5 bg-amber-500 border border-amber-600 transform rotate-45 top-2 shadow-sm" style="left: ${pos.leftPct}%; margin-left:-7px;"></div>
                             ` : `
-                                <div class="absolute h-4 ${m.done ? 'bg-emerald-500 border-emerald-600' : (isSubtask ? 'bg-emerald-400 border-emerald-500' : 'bg-brand-500 border-brand-600')} border rounded top-2 shadow-sm transition-all" style="left: ${pos.leftPct}%; width: ${pos.widthPct}%;" title="${m.title} (${m.start} au ${m.end}) — ${currentResources.join(', ')}"></div>
+                                <div class="absolute h-4 ${m.done ? 'bg-emerald-500 border-emerald-600' : (isSubtask ? 'bg-emerald-400 border-emerald-500' : 'bg-brand-500 border-brand-600')} border rounded top-2 shadow-sm transition-all" style="left: ${pos.leftPct}%; width: ${pos.widthPct}%;"></div>
                             `}
                         </td>
                     </tr>
@@ -1303,22 +1284,16 @@
             if (!title || !start || !end) return;
 
             const existingPhases = (window.appState.milestones || []).filter(m => m.isPhase);
-            const nextPhaseNum = existingPhases.length + 1;
-            const newPhaseId = `p_${Date.now()}`;
-
             const newPhase = {
-                id: newPhaseId,
+                id: `p_${Date.now()}`,
                 isPhase: true,
-                phase: nextPhaseNum,
+                phase: existingPhases.length + 1,
                 title: title,
                 start: start,
                 end: end
             };
 
-            if (!Array.isArray(window.appState.milestones)) {
-                window.appState.milestones = [];
-            }
-
+            if (!Array.isArray(window.appState.milestones)) window.appState.milestones = [];
             window.appState.milestones.push(newPhase);
 
             closeModal('modal-phase');
@@ -1348,10 +1323,7 @@
             const resSelect = document.getElementById('itemResourcesSelect');
             const selectedResources = resSelect ? Array.from(resSelect.selectedOptions).map(opt => opt.value) : [];
 
-            if (!Array.isArray(window.appState.milestones)) {
-                window.appState.milestones = [];
-            }
-
+            if (!Array.isArray(window.appState.milestones)) window.appState.milestones = [];
             const parsedPhase = isNaN(Number(phase)) ? phase : Number(phase);
 
             const newItem = {
@@ -1388,362 +1360,27 @@
 
         function downloadPlanningPDF() {
             renderPlanning();
-
             const windowPrint = window.open('', '_blank', 'width=1400,height=900');
             if (!windowPrint) {
-                alert("Veuillez autoriser les fenêtres surgissantes (pop-ups) pour télécharger le PDF.");
+                alert("Veuillez autoriser les pop-ups pour télécharger le PDF.");
                 return;
             }
-
             const now = new Date().toLocaleDateString('fr-FR');
             const milestones = window.appState.milestones || [];
             const nonPhaseItems = milestones.filter(m => !m.isPhase);
             const completedCount = nonPhaseItems.filter(m => m.done).length;
             const totalCount = nonPhaseItems.length;
             const progressPct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-            const nextMilestone = nonPhaseItems.find(m => m.isKey && !m.done) || nonPhaseItems.find(m => !m.done);
-
-            const formatDateShort = (d) => {
-                if (!d) return '--';
-                const parts = d.split('-');
-                return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0].slice(2)}` : d;
-            };
-
-            const projectStart = new Date("2026-09-01").getTime();
-            const projectEnd = new Date("2028-01-31").getTime();
-            const totalDuration = projectEnd - projectStart;
 
             const rowsHtml = milestones.map(m => {
-                const isPhase = m.isPhase;
-                const isMilestone = m.isKey;
-                const isSubtask = m.isSubtask;
-
-                const start = new Date(m.start).getTime();
-                const end = new Date(m.end).getTime();
-
-                const leftPct = Math.max(0, Math.min(100, ((start - projectStart) / totalDuration) * 100));
-                const widthPct = Math.max(1.2, Math.min(100 - leftPct, (((end - start) || (86400000 * 2)) / totalDuration) * 100));
-
-                if (isPhase) {
-                    return `
-                        <tr class="section-row">
-                            <td class="task-name" style="font-weight: 700;">${m.title}</td>
-                            <td class="task-date">${formatDateShort(m.start)}</td>
-                            <td class="task-date">${formatDateShort(m.end)}</td>
-                            <td colspan="17" class="gantt-cell" style="background:#f1f5f9;">
-                                <div class="bar bar-phase" style="left: ${leftPct}%; width: ${widthPct}%;"></div>
-                            </td>
-                        </tr>
-                    `;
+                const pos = calculateGanttPosition(m.start, m.end);
+                if (m.isPhase) {
+                    return `<tr style="background:#f1f5f9; font-weight:700;"><td style="padding:4px 6px;">${m.title}</td><td colspan="18" style="position:relative;"><div style="position:absolute; top:3px; height:5px; background:#475569; left:${pos.leftPct}%; width:${pos.widthPct}%;"></div></td></tr>`;
                 }
-
-                const rowBgClass = isMilestone ? 'milestone-row' : '';
-                const indent = isSubtask ? 'padding-left: 12px;' : 'padding-left: 6px;';
-
-                return `
-                    <tr class="${rowBgClass}">
-                        <td class="task-name" style="${indent}">
-                            ${isMilestone ? '◆ ' : ''}${m.title}
-                        </td>
-                        <td class="task-date">${formatDateShort(m.start)}</td>
-                        <td class="task-date">${formatDateShort(m.end)}</td>
-                        <td colspan="17" class="gantt-cell">
-                            ${isMilestone ? `
-                                <div class="bar-milestone" style="left: ${leftPct}%; margin-left:-4px;"></div>
-                            ` : `
-                                <div class="bar bar-task" style="left: ${leftPct}%; width: ${widthPct}%;"></div>
-                            `}
-                        </td>
-                    </tr>
-                `;
+                return `<tr><td style="padding:3px 6px; ${m.isSubtask?'padding-left:14px;':''}">${m.isKey?'◆ ':''}${m.title}</td><td colspan="18" style="position:relative;"><div style="position:absolute; top:3px; height:8px; background:${m.isKey?'#d97706':'#0284c7'}; left:${pos.leftPct}%; width:${m.isKey?'8px':pos.widthPct+'%'}; ${m.isKey?'transform:rotate(45deg);':''}"></div></td></tr>`;
             }).join('');
 
-            windowPrint.document.write(`
-                <!DOCTYPE html>
-                <html lang="fr">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Planning_Projet_TRITII_${now.replaceAll('/', '-')}.pdf</title>
-                    <style>
-                        @page { size: A4 landscape; margin: 6mm; }
-                        *, *::before, *::after { box-sizing: border-box; }
-                        body { 
-                            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-                            font-size: 7.5pt; 
-                            color: #0f172a; 
-                            margin: 0; 
-                            padding: 8px;
-                            background: #fff;
-                            -webkit-print-color-adjust: exact !important;
-                            print-color-adjust: exact !important;
-                        }
-                        .header-banner {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-                            color: #ffffff;
-                            padding: 8px 14px;
-                            border-radius: 6px;
-                            margin-bottom: 8px;
-                        }
-                        .header-title-block h1 {
-                            margin: 0;
-                            font-size: 15pt;
-                            font-weight: 700;
-                            letter-spacing: -0.3px;
-                            color: #ffffff;
-                        }
-                        .header-title-block p {
-                            margin: 2px 0 0 0;
-                            font-size: 8.5pt;
-                            color: #cbd5e1;
-                        }
-                        .header-logo-img {
-                            height: 38px;
-                            width: auto;
-                            object-fit: contain;
-                            background: #ffffff;
-                            padding: 2px 6px;
-                            border-radius: 4px;
-                        }
-                        .kpi-row {
-                            display: flex;
-                            gap: 8px;
-                            margin-bottom: 6px;
-                        }
-                        .kpi-card {
-                            flex: 1;
-                            background-color: #f8fafc;
-                            border: 1px solid #e2e8f0;
-                            border-left: 4px solid #0284c7;
-                            padding: 3px 8px;
-                            border-radius: 4px;
-                        }
-                        .kpi-card.accent-purple { border-left-color: #8b5cf6; }
-                        .kpi-card.accent-emerald { border-left-color: #10b981; }
-                        .kpi-card.accent-amber { border-left-color: #d97706; }
-                        .kpi-label {
-                            font-size: 6.5pt;
-                            text-transform: uppercase;
-                            font-weight: 700;
-                            color: #64748b;
-                            letter-spacing: 0.5px;
-                        }
-                        .kpi-value {
-                            font-size: 9.5pt;
-                            font-weight: 700;
-                            color: #0f172a;
-                            margin-top: 1px;
-                        }
-                        .table-container {
-                            border: 1px solid #cbd5e1;
-                            border-radius: 4px;
-                            overflow: hidden;
-                        }
-                        table.gantt-table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            font-size: 6.2pt;
-                            table-layout: fixed;
-                        }
-                        table.gantt-table th {
-                            background-color: #0f172a;
-                            color: #ffffff;
-                            font-weight: 600;
-                            padding: 3px 2px;
-                            text-align: center;
-                            border-right: 1px solid #334155;
-                            white-space: nowrap;
-                        }
-                        table.gantt-table th.task-col-header {
-                            text-align: left;
-                            padding-left: 6px;
-                        }
-                        table.gantt-table th.month-header {
-                            text-align: center;
-                            background-color: #1e293b;
-                            font-size: 6.2pt;
-                            letter-spacing: 0.5px;
-                            border-bottom: 1px solid #334155;
-                        }
-                        table.gantt-table td {
-                            padding: 2px 3px;
-                            border-bottom: 1px solid #e2e8f0;
-                            border-right: 1px solid #f1f5f9;
-                            color: #334155;
-                            vertical-align: middle;
-                            height: 14.2px;
-                        }
-                        tr.section-row td {
-                            background-color: #f1f5f9;
-                            font-weight: 700;
-                            color: #0f172a;
-                            font-size: 6.4pt;
-                            border-top: 1px solid #cbd5e1;
-                            border-bottom: 1px solid #cbd5e1;
-                        }
-                        tr.milestone-row td {
-                            background-color: #fffbe6;
-                            font-weight: 600;
-                        }
-                        .task-name {
-                            width: 215px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                        }
-                        .task-date {
-                            width: 48px;
-                            text-align: center;
-                            font-family: monospace;
-                            font-size: 5.8pt;
-                            color: #475569;
-                        }
-                        .gantt-cell {
-                            position: relative;
-                            padding: 0 !important;
-                            background-color: #ffffff;
-                        }
-                        .bar {
-                            position: absolute;
-                            top: 3px;
-                            bottom: 3px;
-                            border-radius: 2px;
-                        }
-                        .bar-phase {
-                            background: #475569;
-                            height: 5px;
-                            top: 4px;
-                        }
-                        .bar-task {
-                            background-color: #0284c7;
-                            border: 1px solid #0369a1;
-                            height: 8px;
-                            top: 3px;
-                        }
-                        .bar-milestone {
-                            width: 8px;
-                            height: 8px;
-                            background-color: #d97706;
-                            transform: rotate(45deg);
-                            position: absolute;
-                            top: 3px;
-                            border: 1px solid #b45309;
-                        }
-                        .legend-row {
-                            display: flex;
-                            align-items: center;
-                            justify-content: flex-end;
-                            gap: 16px;
-                            padding: 4px 8px 0 8px;
-                            font-size: 7pt;
-                            color: #475569;
-                        }
-                        .legend-item {
-                            display: flex;
-                            align-items: center;
-                            gap: 5px;
-                        }
-                        .legend-box {
-                            width: 12px;
-                            height: 8px;
-                            border-radius: 2px;
-                        }
-                        .legend-diamond {
-                            width: 7px;
-                            height: 7px;
-                            background-color: #d97706;
-                            transform: rotate(45deg);
-                            border: 1px solid #b45309;
-                        }
-                        .page-footer {
-                            margin-top: 6px;
-                            padding-top: 4px;
-                            border-top: 1px solid #e2e8f0;
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            font-size: 7.5pt;
-                            color: #64748b;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="header-banner">
-                        <div class="header-title-block">
-                            <h1>TRI'TII — Conteneur de Tri Automatique</h1>
-                            <p>Planning Général Prévisionnel &amp; Suivi des ${totalCount} Tâches et Jalons Clés</p>
-                        </div>
-                    </div>
-
-                    <div class="kpi-row">
-                        <div class="kpi-card">
-                            <div class="kpi-label">Période du Projet</div>
-                            <div class="kpi-value">09/09/2026 – 25/01/2028</div>
-                        </div>
-                        <div class="kpi-card accent-purple">
-                            <div class="kpi-label">Volume de Tâches</div>
-                            <div class="kpi-value">${totalCount} Tâches &amp; Jalons Exhaustifs</div>
-                        </div>
-                        <div class="kpi-card accent-emerald">
-                            <div class="kpi-label">Avancée Globale</div>
-                            <div class="kpi-value">${progressPct}% (${completedCount}/${totalCount} complétés)</div>
-                        </div>
-                        <div class="kpi-card accent-amber">
-                            <div class="kpi-label">Prochain Jalon</div>
-                            <div class="kpi-value">${nextMilestone ? `${nextMilestone.title} (${formatDateShort(nextMilestone.end)})` : 'Aucun'}</div>
-                        </div>
-                    </div>
-
-                    <div class="table-container">
-                        <table class="gantt-table">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" class="task-col-header" style="width: 215px;">Nom de la tâche / Jalon</th>
-                                    <th rowspan="2" class="task-date">Début</th>
-                                    <th rowspan="2" class="task-date">Fin</th>
-                                    <th colspan="4" class="month-header">2026</th>
-                                    <th colspan="12" class="month-header">2027</th>
-                                    <th colspan="1" class="month-header">2028</th>
-                                </tr>
-                                <tr>
-                                    <th class="month-header">SEP</th><th class="month-header">OCT</th><th class="month-header">NOV</th><th class="month-header">DÉC</th>
-                                    <th class="month-header">JAN</th><th class="month-header">FÉV</th><th class="month-header">MAR</th><th class="month-header">AVR</th>
-                                    <th class="month-header">MAI</th><th class="month-header">JUN</th><th class="month-header">JUL</th><th class="month-header">AOÛ</th>
-                                    <th class="month-header">SEP</th><th class="month-header">OCT</th><th class="month-header">NOV</th><th class="month-header">DÉC</th>
-                                    <th class="month-header">JAN</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rowsHtml}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="legend-row">
-                        <div class="legend-item"><div class="legend-box" style="background:#475569;"></div> Phase / Macro-tâche</div>
-                        <div class="legend-item"><div class="legend-box" style="background:#0284c7; border:1px solid #0369a1;"></div> Tâche standard</div>
-                        <div class="legend-item"><div class="legend-diamond"></div> Jalon Clé du projet</div>
-                    </div>
-
-                    <footer class="page-footer">
-                        <span>Projet TRI'TII — Document de suivi du planning prévisionnel (${totalCount} éléments)</span>
-                        <span>Mise à jour : ${now} | Format A4 Paysage</span>
-                    </footer>
-
-                    <script>
-                        window.onload = function() {
-                            setTimeout(function() {
-                                window.print();
-                                window.close();
-                            }, 300);
-                        };
-                    <\/script>
-                </body>
-                </html>
-            `);
-
+            windowPrint.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Planning PDF</title><style>body{font-family:sans-serif;font-size:8pt;padding:15px;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #cbd5e1;padding:4px;}</style></head><body><h2>TRI'TII - Planning Général</h2><table><tbody>${rowsHtml}</tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`);
             windowPrint.document.close();
         }
         window.downloadPlanningPDF = downloadPlanningPDF;
@@ -1761,7 +1398,7 @@
             
             if (userSelect) {
                 userSelect.innerHTML = members.length === 0 
-                    ? `<option value="Invite">Invité — Aucun membre</option>`
+                    ? `<option value="Invite">Invité</option>`
                     : members.map(m => `<option value="${m.name}" ${window.appState.activeUser === m.name ? 'selected' : ''}>${m.role || 'Membre'} — ${m.name}</option>`).join('');
                 populatePhaseDropdowns();
             }
@@ -1773,18 +1410,9 @@
             const assigneeOptions = `<option value="Non assigné">Non assigné</option>` + members.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
             if (taskAssignee) taskAssignee.innerHTML = assigneeOptions;
             if (riskOwner) riskOwner.innerHTML = assigneeOptions;
-
-            if (itemResourcesSelect) {
-                itemResourcesSelect.innerHTML = members.map(m => `<option value="${m.name}">${m.name} (${m.role || 'Équipe'})</option>`).join('');
-            }
-
-            if (milestoneSelect) {
-                milestoneSelect.innerHTML = window.appState.milestones.filter(m => !m.isPhase).map(m => `<option value="${m.id}">${m.title}</option>`).join('');
-            }
-
-            if (timeTaskSelect) {
-                timeTaskSelect.innerHTML = window.appState.milestones.filter(m => !m.isPhase).map(m => `<option value="${m.id}">${m.title}</option>`).join('');
-            }
+            if (itemResourcesSelect) itemResourcesSelect.innerHTML = members.map(m => `<option value="${m.name}">${m.name} (${m.role || 'Équipe'})</option>`).join('');
+            if (milestoneSelect) milestoneSelect.innerHTML = window.appState.milestones.filter(m => !m.isPhase).map(m => `<option value="${m.id}">${m.title}</option>`).join('');
+            if (timeTaskSelect) timeTaskSelect.innerHTML = window.appState.milestones.filter(m => !m.isPhase).map(m => `<option value="${m.id}">${m.title}</option>`).join('');
         }
         window.populateDropdowns = populateDropdowns;
 
@@ -1812,21 +1440,16 @@
             if (!header || !tbody) return;
 
             const members = window.appState.team || [];
-
             header.innerHTML = `<th class="py-2.5 px-3 w-1/3">Livrable / Jalon</th>` + members.map(m => `
                 <th class="py-2.5 px-2 text-center border-l border-slate-200 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-300">
                     <div class="flex items-center justify-center space-x-1">
                         <span>${m.name}</span>
-                        <button onclick="deleteMember('${m.id}')" class="text-red-500 hover:text-red-700 p-0.5" title="Supprimer ${m.name}">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5 pointer-events-none"></i>
-                        </button>
+                        <button onclick="deleteMember('${m.id}')" class="text-red-500 hover:text-red-700 p-0.5"><i data-lucide="trash-2" class="w-3.5 h-3.5 pointer-events-none"></i></button>
                     </div>
-                    <span class="block text-[9px] font-normal text-slate-400">${m.role || ''}</span>
                 </th>
             `).join('');
 
             const milestones = window.appState.milestones.filter(m => !m.isPhase);
-
             tbody.innerHTML = milestones.map(m => `
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50">
                     <td class="py-2 px-3 font-medium text-slate-800 dark:text-slate-200">${m.title}</td>
@@ -1846,7 +1469,6 @@
                     }).join('')}
                 </tr>
             `).join('');
-
             lucide.createIcons();
         }
         window.renderRaci = renderRaci;
@@ -1854,53 +1476,31 @@
         function renderTeam() {
             const grid = document.getElementById('teamGrid');
             if (!grid) return;
-
             const members = window.appState.team || [];
-
             if (members.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Aucun membre enregistré dans l'équipe. Cliquez sur "Ajouter un Membre".</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Aucun membre enregistré.</div>`;
                 return;
             }
-
             grid.innerHTML = members.map(m => `
-                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-3 relative group">
+                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-3 relative">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center font-bold text-sm text-white uppercase shadow-md">
-                                ${m.name.slice(0, 2)}
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-bold text-slate-900 dark:text-white">${m.name}</h4>
-                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium">${m.role}</p>
+                            <div class="w-10 h-10 rounded-full bg-brand-600 flex items-center justify-center font-bold text-sm text-white uppercase shadow-md flex-shrink-0">${m.name.slice(0, 2)}</div>
+                            <div class="min-w-0">
+                                <h4 class="text-sm font-bold text-slate-900 dark:text-white truncate">${m.name}</h4>
+                                <p class="text-xs text-brand-600 dark:text-brand-400 font-medium truncate">${m.role}</p>
                             </div>
                         </div>
-                        <button onclick="deleteMember('${m.id}')" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors" title="Supprimer ce membre">
-                            <i data-lucide="trash-2" class="w-4 h-4 pointer-events-none"></i>
-                        </button>
-                    </div>
-                    <div class="text-xs text-slate-500 dark:text-slate-400 space-y-1 pt-1 border-t border-slate-100 dark:border-slate-800">
-                        <div class="flex items-center space-x-1">
-                            <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i>
-                            <span class="truncate">${m.email || 'N/A'}</span>
-                        </div>
+                        <button onclick="deleteMember('${m.id}')" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4 pointer-events-none"></i></button>
                     </div>
                 </div>
             `).join('');
-
             lucide.createIcons();
         }
         window.renderTeam = renderTeam;
 
         function deleteMember(id) {
-            const memberIdStr = String(id);
-            const member = window.appState.team.find(m => String(m.id) === memberIdStr);
-            
-            window.appState.team = window.appState.team.filter(m => String(m.id) !== memberIdStr);
-
-            if (member && window.appState.activeUser === member.name) {
-                window.appState.activeUser = window.appState.team.length > 0 ? window.appState.team[0].name : "Invite";
-            }
-
+            window.appState.team = window.appState.team.filter(m => String(m.id) !== String(id));
             saveData();
             updateUI();
         }
@@ -1915,11 +1515,8 @@
 
             const activeTab = document.getElementById(`tab-${tabId}`);
             const activeNav = document.getElementById(`nav-${tabId}`);
-
             if (activeTab) activeTab.classList.remove('hidden');
-            if (activeNav) {
-                activeNav.classList.add('bg-brand-50', 'dark:bg-brand-950/60', 'text-brand-600', 'dark:text-brand-400', 'font-semibold');
-            }
+            if (activeNav) activeNav.classList.add('bg-brand-50', 'dark:bg-brand-950/60', 'text-brand-600', 'dark:text-brand-400', 'font-semibold');
         }
         window.switchTab = switchTab;
 
@@ -1944,6 +1541,7 @@
 
         function toggleTheme() {
             window.appState.theme = window.appState.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.classList.toggle('dark', window.appState.theme === 'dark');
             saveData();
             updateUI();
         }
@@ -1951,22 +1549,19 @@
 
         function saveData() {
             localStorage.setItem("tritii_state", JSON.stringify(window.appState));
-            if (window.syncAppStateToCloud) {
-                window.syncAppStateToCloud(window.appState);
-            }
+            if (window.syncAppStateToCloud) window.syncAppStateToCloud(window.appState);
         }
         window.saveData = saveData;
 
         function renderWorkload() {
             const list = document.getElementById('memberWorkloadList');
             if (!list) return;
-
-            if (window.appState.team.length === 0) {
+            const members = window.appState.team || [];
+            if (members.length === 0) {
                 list.innerHTML = `<div class="text-center text-xs text-slate-400">Aucun membre enregistré.</div>`;
                 return;
             }
-
-            list.innerHTML = window.appState.team.map(m => `
+            list.innerHTML = members.map(m => `
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1">
                     <div class="flex justify-between text-xs font-semibold">
                         <span>${m.name} (${m.role})</span>
@@ -2014,7 +1609,6 @@
             e.preventDefault();
             const hours = parseFloat(document.getElementById('manualHoursInput').value);
             if (isNaN(hours) || hours <= 0) return;
-
             window.appState.loggedHours = (window.appState.loggedHours || 0) + hours;
             document.getElementById('manualHoursInput').value = '';
             saveData();
@@ -2038,7 +1632,6 @@
                 priority: priority,
                 status: 'todo'
             });
-
             closeModal('modal-task');
             saveData();
             renderKanban();
@@ -2046,8 +1639,7 @@
         window.saveTask = saveTask;
 
         function deleteTask(id) {
-            const idStr = String(id);
-            window.appState.tasks = window.appState.tasks.filter(t => String(t.id) !== idStr);
+            window.appState.tasks = window.appState.tasks.filter(t => String(t.id) !== String(id));
             saveData();
             renderKanban();
         }
@@ -2056,25 +1648,18 @@
         function renderKanban() {
             const cols = { todo: document.getElementById('col-todo'), in_progress: document.getElementById('col-in_progress'), done: document.getElementById('col-done') };
             const counts = { todo: document.getElementById('count-todo'), in_progress: document.getElementById('count-in_progress'), done: document.getElementById('count-done') };
-
             if (!cols.todo) return;
 
             Object.keys(cols).forEach(k => cols[k].innerHTML = '');
-
             const taskCounts = { todo: 0, in_progress: 0, done: 0 };
 
             window.appState.tasks.forEach(t => {
                 taskCounts[t.status]++;
                 cols[t.status].innerHTML += `
-                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 space-y-2 shadow-sm relative group">
+                    <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 space-y-2 shadow-sm relative">
                         <div class="flex justify-between items-start">
                             <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 pr-4">${t.title}</h4>
-                            <div class="flex items-center space-x-1">
-                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${t.priority === 'Haute' ? 'bg-red-100 text-red-800' : 'bg-slate-200 text-slate-700'}">${t.priority}</span>
-                                <button onclick="deleteTask('${t.id}')" class="text-red-500 hover:text-red-700 p-0.5 rounded hover:bg-red-100 dark:hover:bg-red-950/40 transition-colors" title="Supprimer la tâche">
-                                    <i data-lucide="x" class="w-3.5 h-3.5 pointer-events-none"></i>
-                                </button>
-                            </div>
+                            <button onclick="deleteTask('${t.id}')" class="text-red-500 hover:text-red-700 p-0.5"><i data-lucide="x" class="w-3.5 h-3.5 pointer-events-none"></i></button>
                         </div>
                         <p class="text-[11px] text-slate-500">${t.desc || ''}</p>
                         <div class="flex justify-between items-center text-[10px] text-slate-400 pt-1">
@@ -2088,14 +1673,13 @@
                     </div>
                 `;
             });
-
             Object.keys(counts).forEach(k => counts[k].innerText = taskCounts[k]);
             lucide.createIcons();
         }
         window.renderKanban = renderKanban;
 
         function moveTask(id, newStatus) {
-            const task = window.appState.tasks.find(t => t.id === id);
+            const task = window.appState.tasks.find(t => String(t.id) === String(id));
             if (task) {
                 task.status = newStatus;
                 saveData();
@@ -2107,10 +1691,8 @@
         function handleFileSelection(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             document.getElementById('fileSelectedName').value = file.name;
             document.getElementById('fileTypeInput').value = file.type || file.name.split('.').pop();
-
             const reader = new FileReader();
             reader.onload = function(evt) {
                 document.getElementById('fileBase64Data').value = evt.target.result;
@@ -2146,25 +1728,23 @@
         function renderDeliverables() {
             const grid = document.getElementById('deliverablesGrid');
             if (!grid) return;
-
-            if (window.appState.deliverables.length === 0) {
+            const deliverables = window.appState.deliverables || [];
+            if (deliverables.length === 0) {
                 grid.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Aucun livrable déposé.</div>`;
                 return;
             }
-
-            grid.innerHTML = window.appState.deliverables.map(d => `
+            grid.innerHTML = deliverables.map(d => `
                 <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-2">
                     <div class="flex items-center space-x-3">
-                        <i data-lucide="file-text" class="w-6 h-6 text-brand-600"></i>
+                        <i data-lucide="file-text" class="w-6 h-6 text-brand-600 flex-shrink-0"></i>
                         <div class="min-w-0 flex-1">
                             <h4 class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">${d.name}</h4>
                             <p class="text-[10px] text-slate-400">${d.date}</p>
                         </div>
                     </div>
-                    ${d.fileData ? `<a href="${d.fileData}" download="${d.fileName || 'livrable'}" class="block text-center text-xs text-brand-600 font-semibold pt-2 hover:underline">Télécharger le fichier</a>` : ''}
+                    ${d.fileData ? `<a href="${d.fileData}" download="${d.fileName || 'livrable'}" class="block text-center text-xs text-brand-600 font-semibold pt-2 hover:underline">Télécharger</a>` : ''}
                 </div>
             `).join('');
-
             lucide.createIcons();
         }
         window.renderDeliverables = renderDeliverables;
@@ -2178,7 +1758,6 @@
             const summary = document.getElementById('meetingSummary').value;
 
             if (!window.appState.meetings) window.appState.meetings = [];
-
             window.appState.meetings.push({
                 id: Date.now().toString(),
                 title: title,
@@ -2212,10 +1791,9 @@
         function openEmailSendModal(meetingId) {
             const m = (window.appState.meetings || []).find(item => String(item.id) === String(meetingId));
             if (!m) return;
-
             const recipients = [window.appState.emailRecipientsStudents, window.appState.emailRecipientsTutors].filter(Boolean).join(', ');
-            const subject = `[TRI'TII PV] Compte-Rendu de Réunion : ${m.title}`;
-            const body = `Bonjour,\n\nVeuillez trouver ci-dessous le compte-rendu (PV) de la réunion "${m.title}" organisée le ${m.date ? new Date(m.date).toLocaleString('fr-FR') : 'N/A'} à ${m.location || 'N/A'}.\n\n--- ORDRE DU JOUR ---\n${m.agenda || 'N/A'}\n\n--- COMPTE-RENDU & RÉSUMÉ ---\n${m.summary || 'Aucun résumé renseigné.'}\n\nCordialement,\nÉquipe Projet TRI'TII — WorkSpace`;
+            const subject = `[TRI'TII PV] Compte-Rendu : ${m.title}`;
+            const body = `Bonjour,\n\nCompte-rendu de la réunion "${m.title}" du ${m.date ? new Date(m.date).toLocaleString('fr-FR') : 'N/A'}.\n\n--- ORDRE DU JOUR ---\n${m.agenda || 'N/A'}\n\n--- COMPTE-RENDU ---\n${m.summary || 'N/A'}\n\nCordialement,\nÉquipe TRI'TII`;
 
             openModal('modal-email-send');
             document.getElementById('sendEmailRecipientsList').value = recipients;
@@ -2225,27 +1803,20 @@
         }
         window.openEmailSendModal = openEmailSendModal;
 
-        async function sendEmailViaServer() {
+        function sendEmailViaServer() {
             const recipients = document.getElementById('sendEmailRecipientsList').value.trim();
             const subject = document.getElementById('sendEmailSubject').value.trim();
             const body = document.getElementById('sendEmailBody').value.trim();
             const statusEl = document.getElementById('sendEmailStatus');
 
             if (!recipients) {
-                statusEl.className = "text-[11px] font-semibold text-red-500";
-                statusEl.innerText = "Veuillez renseigner au moins un destinataire.";
+                statusEl.innerText = "Veuillez renseigner un destinataire.";
                 return;
             }
 
-            statusEl.className = "text-[11px] font-semibold text-brand-600 animate-pulse";
-            statusEl.innerText = "Ouverture de votre messagerie sécurisée (Client Mail)...";
-
-            setTimeout(() => {
-                window.location.href = `mailto:${encodeURIComponent(recipients)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                statusEl.className = "text-[11px] font-semibold text-emerald-600";
-                statusEl.innerText = "✅ Client mail ouvert avec succès !";
-                setTimeout(() => closeModal('modal-email-send'), 1500);
-            }, 800);
+            window.location.href = `mailto:${encodeURIComponent(recipients)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            statusEl.innerText = "Client mail ouvert !";
+            setTimeout(() => closeModal('modal-email-send'), 1500);
         }
         window.sendEmailViaServer = sendEmailViaServer;
 
@@ -2253,98 +1824,23 @@
             const body = document.getElementById('sendEmailBody').value;
             const subject = document.getElementById('sendEmailSubject').value;
             const recipients = document.getElementById('sendEmailRecipientsList').value;
-            const fullText = `To: ${recipients}\nSubject: ${subject}\n\n${body}`;
-
             const textArea = document.createElement("textarea");
-            textArea.value = fullText;
+            textArea.value = `To: ${recipients}\nSubject: ${subject}\n\n${body}`;
             document.body.appendChild(textArea);
             textArea.select();
             try {
                 document.execCommand('copy');
-                document.getElementById('sendEmailStatus').innerText = 'Contenu copié dans le presse-papier !';
-            } catch (err) {
-                alert("Erreur lors de la copie.");
-            }
+                document.getElementById('sendEmailStatus').innerText = 'Copié !';
+            } catch (err) {}
             textArea.remove();
         }
         window.copyEmailContent = copyEmailContent;
 
-        function confirmDirectEmailSend() {
-            const recipients = document.getElementById('sendEmailRecipientsList').value;
-            const subject = encodeURIComponent(document.getElementById('sendEmailSubject').value);
-            const body = encodeURIComponent(document.getElementById('sendEmailBody').value);
-
-            window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
-            document.getElementById('sendEmailStatus').innerText = 'Ouverture du client mail...';
-            setTimeout(() => closeModal('modal-email-send'), 1500);
-        }
-        window.confirmDirectEmailSend = confirmDirectEmailSend;
-
         function downloadMeetingPDF(meetingId) {
             const m = (window.appState.meetings || []).find(item => String(item.id) === String(meetingId));
             if (!m) return;
-
             const winPrint = window.open('', '_blank', 'width=900,height=700');
-            if (!winPrint) {
-                alert("Veuillez autoriser les fenêtres pop-up pour télécharger le PDF.");
-                return;
-            }
-
-            winPrint.document.write(`
-                <!DOCTYPE html>
-                <html lang="fr">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>PV_Reunion_${m.title.replaceAll(' ', '_')}.pdf</title>
-                    <style>
-                        body { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 11pt; color: #0f172a; padding: 30px; line-height: 1.5; }
-                        .header { border-bottom: 2px solid #2563eb; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-                        h1 { margin: 0; font-size: 18pt; color: #1e3a8a; }
-                        .meta { font-size: 10pt; color: #475569; margin-top: 5px; }
-                        .section { margin-bottom: 20px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; }
-                        h3 { margin-top: 0; font-size: 12pt; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 5px; }
-                        .footer { margin-top: 40px; padding-top: 15px; border-top: 1px solid #e2e8f0; font-size: 9pt; color: #64748b; display: flex; justify-content: space-between; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <div>
-                            <h1>TRI'TII WorkSpace — Procès-Verbal de Réunion</h1>
-                            <div class="meta">Objet : <strong>${m.title}</strong></div>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 20px; font-size: 10pt; color: #334155;">
-                        <p><strong>Date &amp; Heure :</strong> ${m.date ? new Date(m.date).toLocaleString('fr-FR') : 'N/A'}</p>
-                        <p><strong>Lieu / Salle :</strong> ${m.location || 'N/A'}</p>
-                    </div>
-
-                    <div class="section">
-                        <h3>Ordre du Jour</h3>
-                        <p style="white-space: pre-line; margin: 0;">${m.agenda || 'Aucun ordre du jour renseigné.'}</p>
-                    </div>
-
-                    <div class="section">
-                        <h3>Compte-Rendu &amp; Résumé des Décisions (PV)</h3>
-                        <p style="white-space: pre-line; margin: 0;">${m.summary || 'Aucun résumé renseigné pour cette réunion.'}</p>
-                    </div>
-
-                    <div class="footer">
-                        <span>Projet TRI'TII — ITII Normandie</span>
-                        <span>Date d'édition : ${new Date().toLocaleDateString('fr-FR')}</span>
-                    </div>
-
-                    <script>
-                        window.onload = function() {
-                            setTimeout(function() {
-                                window.print();
-                                window.close();
-                            }, 400);
-                        };
-                    <\/script>
-                </body>
-                </html>
-            `);
+            winPrint.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>PV</title><style>body{font-family:sans-serif;padding:30px;}</style></head><body><h1>TRI'TII - PV de Réunion</h1><p><strong>${m.title}</strong></p><p>${m.summary || ''}</p><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`);
             winPrint.document.close();
         }
         window.downloadMeetingPDF = downloadMeetingPDF;
@@ -2352,49 +1848,37 @@
         function renderMeetings() {
             const list = document.getElementById('meetingsList');
             if (!list) return;
-
             const meetings = window.appState.meetings || [];
-
             if (meetings.length === 0) {
-                list.innerHTML = `<div class="text-center py-6 text-xs text-slate-400">Aucune réunion programmée. Cliquez sur "Programmer une Réunion".</div>`;
+                list.innerHTML = `<div class="text-center py-6 text-xs text-slate-400">Aucune réunion programmée.</div>`;
                 return;
             }
-
             list.innerHTML = meetings.map(m => `
-                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-3 relative group">
+                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-3">
                     <div class="flex items-center justify-between">
                         <h4 class="text-sm font-bold text-slate-900 dark:text-white">${m.title}</h4>
-                        <div class="flex items-center space-x-2">
-                            <button onclick="openEmailSendModal('${m.id}')" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-lg text-xs font-semibold hover:bg-emerald-100 flex items-center space-x-1" title="Envoyer le PV par email">
+                        <div class="flex items-center space-x-1.5">
+                            <button onclick="openEmailSendModal('${m.id}')" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 rounded-lg text-xs font-semibold hover:bg-emerald-100 flex items-center space-x-1">
                                 <i data-lucide="mail" class="w-3.5 h-3.5"></i>
-                                <span class="hidden sm:inline">Envoyer PV</span>
+                                <span class="hidden sm:inline">Email</span>
                             </button>
-                            <button onclick="downloadMeetingPDF('${m.id}')" class="px-2.5 py-1 bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-lg text-xs font-semibold hover:bg-brand-100 flex items-center space-x-1" title="Télécharger le PV en PDF">
+                            <button onclick="downloadMeetingPDF('${m.id}')" class="px-2.5 py-1 bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300 border border-brand-200 dark:border-brand-800 rounded-lg text-xs font-semibold hover:bg-brand-100 flex items-center space-x-1">
                                 <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
-                                <span class="hidden sm:inline">PDF PV</span>
+                                <span class="hidden sm:inline">PDF</span>
                             </button>
-                            <button onclick="deleteMeeting('${m.id}')" class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40" title="Supprimer la réunion">
-                                <i data-lucide="trash-2" class="w-4 h-4 pointer-events-none"></i>
-                            </button>
+                            <button onclick="deleteMeeting('${m.id}')" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-4 h-4 pointer-events-none"></i></button>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-4 text-xs text-slate-500 dark:text-slate-400">
+                    <div class="flex items-center space-x-4 text-xs text-slate-500">
                         <span>📅 ${m.date ? new Date(m.date).toLocaleString('fr-FR') : 'N/A'}</span>
                         <span>📍 ${m.location || 'N/A'}</span>
                     </div>
-                    ${m.agenda ? `
-                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
-                            <span class="font-bold text-slate-700 dark:text-slate-300 block mb-0.5">Ordre du jour :</span>
-                            <p class="text-slate-600 dark:text-slate-300 whitespace-pre-line">${m.agenda}</p>
-                        </div>
-                    ` : ''}
                     <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs space-y-1">
-                        <label class="font-bold text-brand-600 dark:text-brand-400 block">Résumé / Compte-Rendu (PV) :</label>
-                        <textarea rows="3" onchange="updateMeetingSummary('${m.id}', this.value)" placeholder="Saisissez ou éditez les notes et décisions de la réunion ici..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-brand-500 resize-y">${m.summary || ''}</textarea>
+                        <label class="font-bold text-brand-600 dark:text-brand-400 block">Résumé / PV :</label>
+                        <textarea rows="3" onchange="updateMeetingSummary('${m.id}', this.value)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none">${m.summary || ''}</textarea>
                     </div>
                 </div>
             `).join('');
-
             lucide.createIcons();
         }
         window.renderMeetings = renderMeetings;
@@ -2404,24 +1888,15 @@
             const name = document.getElementById('memberNameInput').value.trim();
             const role = document.getElementById('memberRoleInput').value.trim();
             const email = document.getElementById('memberEmailInput').value.trim();
-
             if (!name) return;
 
             if (!window.appState.team) window.appState.team = [];
-
-            window.appState.team.push({
-                id: Date.now().toString(),
-                name: name,
-                role: role,
-                email: email,
-                hours: 0
-            });
+            window.appState.team.push({ id: Date.now().toString(), name: name, role: role, email: email, hours: 0 });
 
             closeModal('modal-member');
             document.getElementById('memberNameInput').value = '';
             document.getElementById('memberRoleInput').value = '';
             document.getElementById('memberEmailInput').value = '';
-
             saveData();
             updateUI();
         }
@@ -2431,16 +1906,13 @@
             const list = document.getElementById('feedList');
             const filter = document.getElementById('filterMember')?.value || 'ALL';
             if (!list) return;
-
             const logs = (window.appState.logs || []).filter(l => filter === 'ALL' || l.author === filter);
-
             if (logs.length === 0) {
-                list.innerHTML = `<div class="text-center py-6 text-xs text-slate-400">Aucun message dans le journal. Partagez votre premier avancement !</div>`;
+                list.innerHTML = `<div class="text-center py-6 text-xs text-slate-400">Aucun message dans le journal.</div>`;
                 return;
             }
-
             list.innerHTML = logs.map(l => `
-                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-2 relative group">
+                <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-2">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
                             <span class="w-7 h-7 rounded-full bg-brand-600 flex items-center justify-center font-bold text-[10px] text-white uppercase shadow-sm">${l.author.slice(0, 2)}</span>
@@ -2451,15 +1923,12 @@
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${l.category === 'Point de blocage' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">${l.category}</span>
-                            <button onclick="deleteLog('${l.id}')" class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40" title="Supprimer cette entrée">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5 pointer-events-none"></i>
-                            </button>
+                            <button onclick="deleteLog('${l.id}')" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5 pointer-events-none"></i></button>
                         </div>
                     </div>
                     <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${l.text}</p>
                 </div>
             `).join('');
-
             lucide.createIcons();
         }
         window.renderFeed = renderFeed;
@@ -2471,7 +1940,6 @@
             if (!input || !input.value.trim()) return;
 
             if (!window.appState.logs) window.appState.logs = [];
-
             window.appState.logs.unshift({
                 id: Date.now().toString(),
                 author: window.appState.activeUser || "Anonyme",
@@ -2487,8 +1955,7 @@
         window.postLog = postLog;
 
         function deleteLog(id) {
-            const idStr = String(id);
-            window.appState.logs = (window.appState.logs || []).filter(l => String(l.id) !== idStr);
+            window.appState.logs = (window.appState.logs || []).filter(l => String(l.id) !== String(id));
             saveData();
             renderFeed();
         }
@@ -2506,14 +1973,11 @@
             const type = document.getElementById('itemTypeSelect').value;
             const container = document.getElementById('parentTaskContainer');
             if (!container) return;
-
             if (type === 'subtask') {
                 container.classList.remove('hidden');
                 const parentSelect = document.getElementById('itemParentSelect');
                 if (parentSelect) {
-                    parentSelect.innerHTML = window.appState.milestones
-                        .filter(m => !m.isPhase && !m.isSubtask)
-                        .map(m => `<option value="${m.id}">${m.title}</option>`).join('');
+                    parentSelect.innerHTML = window.appState.milestones.filter(m => !m.isPhase && !m.isSubtask).map(m => `<option value="${m.id}">${m.title}</option>`).join('');
                 }
             } else {
                 container.classList.add('hidden');
@@ -2524,6 +1988,10 @@
         function updateUI() {
             const avatar = document.getElementById('currentUserAvatar');
             if (avatar) avatar.innerText = (window.appState.activeUser || "Invité").slice(0, 2);
+
+            if (window.appState.theme) {
+                document.documentElement.classList.toggle('dark', window.appState.theme === 'dark');
+            }
 
             const completedCount = window.appState.milestones.filter(m => !m.isPhase && m.done).length;
             const totalCount = window.appState.milestones.filter(m => !m.isPhase).length;
@@ -2536,11 +2004,6 @@
             if (statCompleted) statCompleted.innerText = `${completedCount} / ${totalCount}`;
             if (statBar) statBar.style.width = `${progressPct}%`;
             if (statHours) statHours.innerText = `${window.appState.loggedHours || 0}h`;
-
-            const studentsInput = document.getElementById('emailRecipientsStudents');
-            const tutorsInput = document.getElementById('emailRecipientsTutors');
-            if (studentsInput && window.appState.emailRecipientsStudents) studentsInput.value = window.appState.emailRecipientsStudents;
-            if (tutorsInput && window.appState.emailRecipientsTutors) tutorsInput.value = window.appState.emailRecipientsTutors;
 
             populateDropdowns();
             renderFeed();
@@ -2558,30 +2021,24 @@
         function renderRisks() {
             const container = document.querySelector('#tab-risks .grid.grid-cols-1');
             if (!container) return;
-
             const risks = window.appState.risks || [];
-
             if (risks.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Aucun risque identifié. Cliquez sur "Identifier un Risque".</div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Aucun risque identifié.</div>`;
                 return;
             }
-
             container.innerHTML = risks.map(r => `
                 <div class="bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm space-y-2 relative">
                     <div class="flex justify-between items-start">
                         <h4 class="text-xs font-bold text-slate-900 dark:text-white">${r.title}</h4>
                         <div class="flex items-center space-x-1">
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded ${r.impact === 'Critique' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'}">${r.impact}</span>
-                            <button onclick="deleteRisk('${r.id}')" class="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50 dark:hover:bg-red-950/40" title="Supprimer ce risque">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5 pointer-events-none"></i>
-                            </button>
+                            <button onclick="deleteRisk('${r.id}')" class="text-red-500 hover:text-red-700 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5 pointer-events-none"></i></button>
                         </div>
                     </div>
                     <p class="text-xs text-slate-600 dark:text-slate-300"><strong>Atténuation :</strong> ${r.mitigation || 'N/A'}</p>
-                    <div class="text-[10px] text-slate-400 pt-1">Pilote : ${r.owner || 'Non assigné'}</div>
+                    <div class="text-[10px] text-slate-400 pt-1">Pilote : ${r.owner || 'N/A'}</div>
                 </div>
             `).join('');
-
             lucide.createIcons();
         }
         window.renderRisks = renderRisks;
@@ -2592,39 +2049,28 @@
             const impact = document.getElementById('riskImpactSelect').value;
             const owner = document.getElementById('riskOwnerSelect').value;
             const mitigation = document.getElementById('riskMitigationInput').value.trim();
-
             if (!title) return;
 
             if (!window.appState.risks) window.appState.risks = [];
-
-            window.appState.risks.push({
-                id: Date.now().toString(),
-                title: title,
-                impact: impact,
-                owner: owner,
-                mitigation: mitigation
-            });
+            window.appState.risks.push({ id: Date.now().toString(), title, impact, owner, mitigation });
 
             closeModal('modal-risk');
             document.getElementById('riskTitleInput').value = '';
             document.getElementById('riskMitigationInput').value = '';
-
             saveData();
             renderRisks();
         }
         window.saveRisk = saveRisk;
 
         function deleteRisk(id) {
-            const idStr = String(id);
-            window.appState.risks = (window.appState.risks || []).filter(r => String(r.id) !== idStr);
+            window.appState.risks = (window.appState.risks || []).filter(r => String(r.id) !== String(id));
             saveData();
             renderRisks();
         }
         window.deleteRisk = deleteRisk;
 
         function deleteMeeting(id) {
-            const idStr = String(id);
-            window.appState.meetings = (window.appState.meetings || []).filter(m => String(m.id) !== idStr);
+            window.appState.meetings = (window.appState.meetings || []).filter(m => String(m.id) !== String(id));
             saveData();
             renderMeetings();
         }
@@ -2651,8 +2097,7 @@
         window.updateMilestoneDetail = updateMilestoneDetail;
 
         function deletePlanningItem(id) {
-            const idStr = String(id);
-            window.appState.milestones = window.appState.milestones.filter(m => String(m.id) !== idStr);
+            window.appState.milestones = window.appState.milestones.filter(m => String(m.id) !== String(id));
             saveData();
             renderPlanning();
         }
@@ -2663,7 +2108,6 @@
             if (idx === -1) return;
             const newIdx = idx + direction;
             if (newIdx < 0 || newIdx >= window.appState.milestones.length) return;
-
             const item = window.appState.milestones.splice(idx, 1)[0];
             window.appState.milestones.splice(newIdx, 0, item);
             saveData();
@@ -2672,18 +2116,82 @@
         window.movePlanningItem = movePlanningItem;
 
         function saveMultiEmailConfig() {
-            const students = document.getElementById('emailRecipientsStudents').value.trim();
-            const tutors = document.getElementById('emailRecipientsTutors').value.trim();
-
-            window.appState.emailRecipientsStudents = students;
-            window.appState.emailRecipientsTutors = tutors;
-
+            window.appState.emailRecipientsStudents = document.getElementById('emailRecipientsStudents').value.trim();
+            window.appState.emailRecipientsTutors = document.getElementById('emailRecipientsTutors').value.trim();
             saveData();
             closeModal('modal-email-config');
         }
         window.saveMultiEmailConfig = saveMultiEmailConfig;
 
-        // Sécurité globale au chargement de la page pour enlever le splash s'il reste bloqué
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.appState, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "tritii_workspace_backup.json");
+            dlAnchorElem.click();
+            dlAnchorElem.remove();
+        }
+        window.exportData = exportData;
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    window.appState = Object.assign({}, INITIAL_STATE, parsed);
+                    saveData();
+                    updateUI();
+                    alert("Import réussi avec succès !");
+                } catch(err) {
+                    alert("Erreur lors de l'import du fichier JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+        window.importData = importData;
+
+        function resetData() {
+            openModal('modal-confirm-reset');
+        }
+        window.resetData = resetData;
+
+        function confirmResetData() {
+            localStorage.removeItem("tritii_state");
+            window.appState = JSON.parse(JSON.stringify(INITIAL_STATE));
+            saveData();
+            closeModal('modal-confirm-reset');
+            updateUI();
+            switchTab('planning');
+        }
+        window.confirmResetData = confirmResetData;
+
+        function openFullscreenReview() {
+            const total = window.appState.milestones.filter(m => !m.isPhase).length;
+            const done = window.appState.milestones.filter(m => !m.isPhase && m.done).length;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('exec-progress-text').innerText = `${pct}%`;
+            document.getElementById('exec-progress-bar').style.width = `${pct}%`;
+
+            const imminent = window.appState.milestones.filter(m => !m.isPhase && !m.done && m.isKey).slice(0, 3);
+            document.getElementById('exec-imminent-milestones').innerHTML = imminent.length ? imminent.map(m => `<div>◆ ${m.title} (${m.end})</div>`).join('') : '<div>Tous les jalons clés sont réalisés !</div>';
+
+            const topRisks = window.appState.risks || [];
+            document.getElementById('exec-top-risks').innerHTML = topRisks.length ? topRisks.slice(0, 2).map(r => `<div>⚠️ ${r.title} (${r.impact})</div>`).join('') : '<div>Aucun risque critique</div>';
+
+            document.getElementById('exec-milestones-summary').innerHTML = window.appState.milestones.filter(m => !m.isPhase).map(m => `
+                <div class="p-2 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-between">
+                    <span class="${m.done ? 'line-through text-slate-500' : 'text-slate-300'}">${m.title}</span>
+                    <span class="text-[10px] ${m.done ? 'text-emerald-400 font-bold' : 'text-slate-400'}">${m.done ? '✅ Fait' : m.start}</span>
+                </div>
+            `).join('');
+
+            openModal('modal-executive-review');
+        }
+        window.openFullscreenReview = openFullscreenReview;
+
         window.onload = function() {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -2691,7 +2199,7 @@
                     splash.classList.add('fade-out');
                     setTimeout(() => splash.remove(), 500);
                 }
-            }, 1000);
+            }, 800);
             updateUI();
             switchTab('planning');
         };
