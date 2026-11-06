@@ -1,0 +1,33 @@
+{
+  "name": "TRI'TII WorkSpace",
+  "short_name": "TRI'TII",
+  "description": "Plateforme collaborative TRI'TII",
+  "lang": "fr",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "id": "tritii-workspace-v3-2026",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

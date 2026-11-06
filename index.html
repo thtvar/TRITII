@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#0f172a">
 
     <!-- Web App Manifest Dynamique pour masquer la barre Chrome/Safari -->
-    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="manifest" href="tritii.webmanifest">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -2192,6 +2192,16 @@
             switchTab('planning');
         };
     </script>
+<button id="installAppBtn" type="button" style="display:none;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;background:#1d4ed8;color:#fff;border:0;border-radius:9999px;padding:12px 18px;font:600 14px system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.35)">📲 Installer l'application</button>
+<script>
+(function(){
+  var dp=null,b=document.getElementById("installAppBtn");
+  var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
+  window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;if(!standalone)b.style.display="block"});
+  b.addEventListener("click",async function(){if(!dp)return;dp.prompt();try{await dp.userChoice}catch(_){}dp=null;b.style.display="none"});
+  window.addEventListener("appinstalled",function(){b.style.display="none"});
+})();
+</script>
 <script>if("serviceWorker"in navigator&&location.protocol.startsWith("http")){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}</script>
 </body>
 </html>
