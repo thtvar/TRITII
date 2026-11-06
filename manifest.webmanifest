@@ -5,7 +5,7 @@
   "lang": "fr",
   "start_url": "./index.html",
   "scope": "./",
-  "id": "./index.html",
+  "id": "tritii-workspace-app",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0f172a",
