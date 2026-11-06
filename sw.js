@@ -1,5 +1,5 @@
-const CACHE = "tritii-workspace-v2";
-const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"];
+const CACHE = "tritii-workspace-v3";
+const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png", "./logo.png"];
 // Seuls ces serveurs sont mis en cache (les échanges Firebase en temps réel ne sont jamais interceptés)
 const CDN = ["cdn.tailwindcss.com", "unpkg.com", "www.gstatic.com"];
 
